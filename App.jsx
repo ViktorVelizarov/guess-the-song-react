@@ -29,6 +29,8 @@ export default function App()
     "user-read-currently-playing",
     "user-read-playback-state",
     "playlist-read-private",
+    "playlist-read-collaborative",
+    "user-library-read"
     ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     
@@ -63,7 +65,19 @@ export default function App()
         const handleLogin = () => {
             window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
         }
-    
+        
+        function getUserTracks(oneUseToken){
+          var authParams = {
+
+            method: "GET",
+            headers: { Authorization: `Bearer ${oneUseToken}` }
+          }
+         
+          fetch('https://api.spotify.com/v1/me/tracks?limit=50', authParams)
+          .then(res => res.json())
+          .then(data => console.log(data))
+        }
+
         const getInfo = () => {
           let oneUseToken = ""
           if(localStorage.getItem("accessToken"))
@@ -71,15 +85,17 @@ export default function App()
             SetToken(localStorage.getItem("accessToken"))
             oneUseToken = localStorage.getItem("accessToken")
           }
-          var authParams2 = {
+          var authParams = {
 
             method: "GET",
             headers: { Authorization: `Bearer ${oneUseToken}` }
           }
          
-          fetch('https://api.spotify.com/v1/me  ', authParams2)
+          fetch('https://api.spotify.com/v1/me', authParams)
           .then(res => res.json())
           .then(data => console.log(data))
+
+          getUserTracks(oneUseToken)
         }
 
     return(
