@@ -78,6 +78,18 @@ export default function App()
           .then(data => console.log(data))
         }
 
+        function getUserPlaylists(oneUseToken){
+          var authParams = {
+
+            method: "GET",
+            headers: { Authorization: `Bearer ${oneUseToken}` }
+          }
+         
+          fetch('https://api.spotify.com/v1/me/playlists', authParams)
+          .then(res => res.json())
+          .then(data => console.log(data))
+        }
+
         const getInfo = () => {
           let oneUseToken = ""
           if(localStorage.getItem("accessToken"))
@@ -96,6 +108,7 @@ export default function App()
           .then(data => console.log(data))
 
           getUserTracks(oneUseToken)
+          getUserPlaylists(oneUseToken)
         }
 
     return(
