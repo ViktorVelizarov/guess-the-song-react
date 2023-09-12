@@ -75,7 +75,8 @@ export default function App()
          
           fetch('https://api.spotify.com/v1/me/tracks?limit=50', authParams)
           .then(res => res.json())
-          .then(data => console.log(data))
+          .then(data => {console.log(data), 
+          console.log(data.items[1])})
         }
 
         function getUserPlaylists(oneUseToken){
@@ -85,7 +86,7 @@ export default function App()
             headers: { Authorization: `Bearer ${oneUseToken}` }
           }
          
-          fetch('https://api.spotify.com/v1/me/playlists', authParams)
+          fetch('https://api.spotify.com/v1/users/smedjan/playlists?limit=50', authParams)
           .then(res => res.json())
           .then(data => console.log(data))
         }
@@ -112,11 +113,13 @@ export default function App()
         }
 
     return(
-        <div>
-            <h1>hi</h1>
-            <button onClick={handleLogin}> Login</button>
-            <button onClick={getInfo}> Get Info</button>
-        </div>
+        <main>
+            <h1>Guess The Song</h1>
+              <div className="buttonContainer">
+                <button className="loginButton" onClick={handleLogin}> Login</button>
+                <button className="infoButton" onClick={getInfo}> Get Info</button>
+              </div>
+        </main>
     )
 }
 

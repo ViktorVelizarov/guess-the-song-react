@@ -1,0 +1,29 @@
+main{
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginButton{
+    background-color: lightgreen;
+    padding: 15px 60px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.loginButton:hover{
+    color: white;
+}
+
+.infoButton{
+    background-color: lightblue;
+    padding: 15px 60px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.infoButton:hover{
+    color: white;
+}
