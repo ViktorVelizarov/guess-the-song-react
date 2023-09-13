@@ -27,3 +27,17 @@ main{
 .infoButton:hover{
     color: white;
 }
+
+.songPicture{
+    height: 350px;
+    width: 350px;
+    margin-top: 50px;
+}
+
+.songTitle{
+    text-align: center;
+}
+
+.songArtists{
+    text-align: center;
+}
