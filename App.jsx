@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import Song from "./Components/Song"
+import Player from "./Components/Player";
 export default function App()
 {
     const [token, SetToken] = React.useState("")
@@ -24,13 +25,15 @@ export default function App()
     const REDIRECT_URL_AFTER_LOGIN = "http://localhost:5173/";
     const SPACE_DELIMITER = "%20";
     const SCOPES = [
-      "user-read-email",
-      "user-read-private",
+    "user-read-email",
+    "user-read-private",
     "user-read-currently-playing",
     "user-read-playback-state",
     "playlist-read-private",
     "playlist-read-collaborative",
-    "user-library-read"
+    "user-library-read",
+    "streaming",
+    "user-modify-playback-state"
     ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     
@@ -121,6 +124,8 @@ export default function App()
               </div>
               {showSong && <Song name = {currentSong.songName}
                img= {currentSong.songPicture}/>}
+
+               <Player token={token}/>
         </main>
     )
 }
