@@ -1,9 +1,14 @@
 import React, { useEffect } from "react"
 import Song from "./Components/Song"
 import Player from "./Components/Player";
+import GuessPage from "./Components/GuessPage";
 export default function App()
 {
+    const [page, SetPage] = React.useState("")
     const [token, SetToken] = React.useState("")
+    const [loggedIn, SetLoggedIn] = React.useState(false)
+    const [showText, SetShowText] = React.useState(false);
+    const [showGuessPage, SetGuessPage] = React.useState(false);
     const [showSong, SetShowSong] = React.useState(false);
     const [currentSong, SetCurrentSong] = React.useState({});
     const clientID = "3ba0d9e71d40432dad224aacbefec132"
@@ -32,6 +37,7 @@ export default function App()
     "playlist-read-private",
     "playlist-read-collaborative",
     "user-library-read",
+    "user-library-modify",
     "streaming",
     "user-modify-playback-state"
     ];
@@ -54,12 +60,14 @@ export default function App()
           const { access_token, expires_in, token_type } =
             getReturnedParamsFromSpotifyAuth(window.location.hash);
           SetToken(access_token)
+          SetLoggedIn(true)
         }
       });
 
-        const handleLogin = () => {
+        function handleLogin(){
             window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
-        }
+            SetShowText(false)
+          }
         
         function getUserProfileInfo(){
           var authParams = {
@@ -98,21 +106,28 @@ export default function App()
         }
 
         const getInfo = () => {
-          const randomIndex = Math.floor(Math.random() * (49 - 0 + 1)) + 0
-          getRandomTrack()
-            .then(data => {
-            console.log(data.items[randomIndex])
-            const song = data.items[randomIndex]
-            SetCurrentSong({songName: song.track.name
-              , songPicture: song.track.album.images[0].url,
-            songPreview: song.track.preview_url,
-          songArtists: song.track.artists}) })
-            
-          getUserProfileInfo()
-          getUserPlaylists()
+          if (loggedIn == false){
+              SetShowText(true)
+          }
+          else
+          {
+              SetGuessPage(true)
+              const randomIndex = Math.floor(Math.random() * (49 - 0 + 1)) + 0
+              getRandomTrack()
+                .then(data => {
+                console.log(data.items[randomIndex])
+                const song = data.items[randomIndex]
+                SetCurrentSong({songName: song.track.name
+                  , songPicture: song.track.album.images[0].url,
+                songUri: song.track.uri,
+              songArtists: song.track.artists}) })
+                
+              getUserProfileInfo()
+              getUserPlaylists()
 
-          SetShowSong(true);
-          console.log(currentSong)
+              SetShowSong(true)
+              console.log(currentSong)
+          }
         }
 
     return(
@@ -120,12 +135,14 @@ export default function App()
             <h1>Guess The Song</h1>
               <div className="buttonContainer">
                 <button className="loginButton" onClick={handleLogin}> Login</button>
-                <button className="infoButton" onClick={getInfo}> Get Song</button>
+                <button className="infoButton" onClick={getInfo}> Start</button>
               </div>
-              {showSong && <Song name = {currentSong.songName}
-               img= {currentSong.songPicture}/>}
-
-               <Player token={token}/>
+              {showText && <h2> Please login first! </h2>}
+              {showGuessPage &&  <GuessPage/>}
+              {showGuessPage &&  <Player token={token}
+               trackUri={currentSong.songUri}/>}
+              {/* {showSong && <Song name = {currentSong.songName}
+              img= {currentSong.songPicture}/>} */}
         </main>
     )
 }

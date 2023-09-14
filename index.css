@@ -41,3 +41,16 @@ main{
 .songArtists{
     text-align: center;
 }
+
+.form-input{
+    margin-top: 50px;
+    box-sizing: border-box;
+    height: 39px;
+        width: 300px;
+}
+
+.form-submit{
+    box-sizing: border-box;
+    height: 39px;
+        width: 100px;
+}
