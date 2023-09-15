@@ -1,11 +1,14 @@
 import React from "react"
 
-export default function GuessPage(){
-    const [name, setName] = React.useState("");
-      
+export default function GuessPage(props){
+    const [songName, SetSongName] = React.useState("");
+
         const handleSubmit = (event) => {
           event.preventDefault();
-          alert(`The name you entered was: ${name}`);
+          console.log(songName)
+          if (songName == props.name){
+            props.updateAnswerCorrect(true)
+          }
         }
     
       
@@ -19,8 +22,8 @@ export default function GuessPage(){
             <form onSubmit={handleSubmit}>
                 <input className="form-input"
                     type="text" 
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}/>
+                    value={songName}
+                    onChange={(e) => SetSongName(e.target.value)}/>
                 <input className="form-submit" type="submit" />
             </form>
         </div>

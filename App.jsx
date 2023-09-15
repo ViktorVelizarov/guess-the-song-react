@@ -4,13 +4,19 @@ import Player from "./Components/Player";
 import GuessPage from "./Components/GuessPage";
 export default function App()
 {
-    const [page, SetPage] = React.useState("")
     const [token, SetToken] = React.useState("")
     const [loggedIn, SetLoggedIn] = React.useState(false)
     const [showText, SetShowText] = React.useState(false);
     const [showGuessPage, SetGuessPage] = React.useState(false);
     const [showSong, SetShowSong] = React.useState(false);
     const [currentSong, SetCurrentSong] = React.useState({});
+    const [answerCorrect, SetAnswerCorrect] = React.useState(false); 
+
+    const updateAnswerCorrect = (newState) => {
+      SetAnswerCorrect(newState);
+    };
+    console.log("is it correct:")
+    console.log(answerCorrect)
     const clientID = "3ba0d9e71d40432dad224aacbefec132"
     const clientSecret = "e5aed49d8f7549aa8168fc0ede9c0c9a"
     useEffect(() => {
@@ -127,6 +133,8 @@ export default function App()
 
               SetShowSong(true)
               console.log(currentSong)
+
+              SetAnswerCorrect(false)
           }
         }
 
@@ -138,11 +146,25 @@ export default function App()
                 <button className="infoButton" onClick={getInfo}> Start</button>
               </div>
               {showText && <h2> Please login first! </h2>}
-              {showGuessPage &&  <GuessPage/>}
-              {showGuessPage &&  <Player token={token}
-               trackUri={currentSong.songUri}/>}
-              {/* {showSong && <Song name = {currentSong.songName}
-              img= {currentSong.songPicture}/>} */}
+              
+              {showGuessPage && (
+                <>
+                  {!answerCorrect &&
+                    <> <GuessPage
+                      name={currentSong.songName}
+                      answerCorrect={answerCorrect}
+                      updateAnswerCorrect={updateAnswerCorrect}
+                    />
+                    <Player token={token}
+                    trackUri={currentSong.songUri} /> </>}
+                  
+                  {answerCorrect &&
+                    <><Song name = {currentSong.songName} 
+                    img= {currentSong.songPicture}/>
+                    <Player token={token}
+                    trackUri={currentSong.songUri} /> </>}
+                    </>
+                )}      
         </main>
     )
 }
