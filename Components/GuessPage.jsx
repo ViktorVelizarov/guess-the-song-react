@@ -5,8 +5,10 @@ export default function GuessPage(props){
 
         const handleSubmit = (event) => {
           event.preventDefault();
+          console.log(props.name)
           console.log(songName)
           if (songName == props.name){
+            console.log("correct")
             props.updateAnswerCorrect(true)
           }
         }

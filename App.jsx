@@ -1,7 +1,8 @@
 import React, { useEffect } from "react"
 import Song from "./Components/Song"
-import Player from "./Components/Player";
 import GuessPage from "./Components/GuessPage";
+
+
 export default function App()
 {
     const [token, SetToken] = React.useState("")
@@ -11,6 +12,7 @@ export default function App()
     const [showSong, SetShowSong] = React.useState(false);
     const [currentSong, SetCurrentSong] = React.useState({});
     const [answerCorrect, SetAnswerCorrect] = React.useState(false); 
+    const [currentAudio, SetCurrentAudio] = React.useState("")
 
     const updateAnswerCorrect = (newState) => {
       SetAnswerCorrect(newState);
@@ -61,6 +63,16 @@ export default function App()
         return paramsSplitUp;
       };
 
+      //every time the currentSong state changes, we play that song so the user can guess it
+      useEffect(() => {
+        if (currentAudio) { //stop the previous song so they dont overlap
+          currentAudio.pause();
+        }
+        const newAudio = new Audio(currentSong.songPreviw);
+        newAudio.play();
+        SetCurrentAudio(newAudio);
+      }, [currentSong])
+
       useEffect(() => {
         if (window.location.hash) {
           const { access_token, expires_in, token_type } =
@@ -68,7 +80,7 @@ export default function App()
           SetToken(access_token)
           SetLoggedIn(true)
         }
-      });
+      })
 
         function handleLogin(){
             window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
@@ -96,7 +108,6 @@ export default function App()
          
           return fetch('https://api.spotify.com/v1/me/tracks?limit=50', authParams)
           .then(res => res.json())
-          
         }
 
         function getUserPlaylists(){
@@ -111,33 +122,32 @@ export default function App()
           .then(data => console.log(data))
         }
 
-        const getInfo = () => {
-          if (loggedIn == false){
-              SetShowText(true)
-          }
-          else
-          {
-              SetGuessPage(true)
-              const randomIndex = Math.floor(Math.random() * (49 - 0 + 1)) + 0
-              getRandomTrack()
-                .then(data => {
-                console.log(data.items[randomIndex])
-                const song = data.items[randomIndex]
-                SetCurrentSong({songName: song.track.name
-                  , songPicture: song.track.album.images[0].url,
-                songUri: song.track.uri,
-              songArtists: song.track.artists}) })
-                
-              getUserProfileInfo()
-              getUserPlaylists()
-
-              SetShowSong(true)
-              console.log(currentSong)
-
-              SetAnswerCorrect(false)
-          }
-        }
-
+        const getInfo = async () => {
+          if (loggedIn == false) {
+            SetShowText(true);
+          } else {
+            SetGuessPage(true);
+            const randomIndex = Math.floor(Math.random() * (49 - 0 + 1)) + 0
+            getRandomTrack()
+              .then(data => {
+              console.log(data.items[randomIndex])
+              const song = data.items[randomIndex]
+              SetCurrentSong({songName: song.track.name
+                , songPicture: song.track.album.images[0].url,
+              songUri: song.track.uri,
+              songPreviw: song.track.preview_url,
+            songArtists: song.track.artists}) })
+        
+              getUserProfileInfo();
+              getUserPlaylists();
+        
+              SetShowSong(true);
+              console.log(currentSong);
+        
+              SetAnswerCorrect(false);
+            } 
+        };
+      
     return(
         <>
              <div className="navbar">
@@ -151,19 +161,17 @@ export default function App()
               {showGuessPage && (
                 <>
                   {!answerCorrect &&
-                    <> <GuessPage
+                     <GuessPage
                       name={currentSong.songName}
                       answerCorrect={answerCorrect}
                       updateAnswerCorrect={updateAnswerCorrect}
                     />
-                    <Player token={token}
-                    trackUri={currentSong.songUri} /> </>}
+                   }
                   
                   {answerCorrect &&
-                    <><Song name = {currentSong.songName} 
+                    <Song name = {currentSong.songName} 
                     img= {currentSong.songPicture}/>
-                    <Player token={token}
-                    trackUri={currentSong.songUri} /> </>}
+                   }
                     </>
                 )}      
         </main>
