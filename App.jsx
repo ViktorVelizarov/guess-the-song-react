@@ -139,12 +139,13 @@ export default function App()
         }
 
     return(
-        <main>
-            <h1>Guess The Song</h1>
-              <div className="buttonContainer">
-                <button className="loginButton" onClick={handleLogin}> Login</button>
-                <button className="infoButton" onClick={getInfo}> Start</button>
-              </div>
+        <>
+             <div className="navbar">
+              <h1 className="game-title">Guess The Song</h1> 
+              <button className="loginButton" onClick={handleLogin}> Login</button>
+            </div>
+        <main>     
+              <button className="infoButton" onClick={getInfo}> Start</button>
               {showText && <h2> Please login first! </h2>}
               
               {showGuessPage && (
@@ -166,6 +167,7 @@ export default function App()
                     </>
                 )}      
         </main>
+        </>
     )
 }
 
