@@ -17,16 +17,16 @@ export default function GuessPage(props){
     return(
         <>
         <div>
-        <img className="songPicture"
+        <img className="h-80 w-80 mt-12"
          src="https://www.shareicon.net/data/512x512/2016/07/28/803169_box_512x512.png"></img>
         </div>
         <div>
             <form onSubmit={handleSubmit}>
-                <input className="form-input"
+                <input className="mt-12 box-border h-10 w-72"
                     type="text" 
                     value={songName}
                     onChange={(e) => SetSongName(e.target.value)}/>
-                <input className="form-submit" type="submit" />
+                <input className="box-border h-10 w-32" type="submit" />
             </form>
         </div>
         </>

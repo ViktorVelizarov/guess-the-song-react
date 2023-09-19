@@ -151,15 +151,19 @@ export default function App()
       
     return(
         <>
-             <div className="navbar">
+             <div className=" p-4 bg-blue-400 border-black flex
+              flex-row justify-between">
               <h1 className="text-red-300">Guess The Song</h1> 
-              {!loggedIn && <button className="loginButton"
+              {!loggedIn && <button className="bg-green-300 py-4 px-16
+               rounded-xl border-red-800 cursor-pointer hover:text-white"
                onClick={handleLogin}> Login</button>}
                {loggedIn && <><h3>Logged in as: </h3>
                <img src={profilePicture}></img></>}
             </div>
-        <main>     
-              <button className="infoButton" onClick={getInfo}> Start</button>
+        <main className="flex flex-col items-center">     
+              <button className="bg-blue-400 py-4 px-16
+               rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
+                onClick={getInfo}> Start</button>
               {showText && <h2> Please login first! </h2>}
               
               {showGuessPage && (
