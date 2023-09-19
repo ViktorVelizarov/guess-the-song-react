@@ -13,7 +13,7 @@ export default function App()
     const [currentSong, SetCurrentSong] = React.useState({});
     const [answerCorrect, SetAnswerCorrect] = React.useState(false); 
     const [currentAudio, SetCurrentAudio] = React.useState("")
-
+    const [profilePicture, SetProfilePicture] = React.useState("https://i.scdn.co/image/ab6775700000ee8512299563a607d5fcef06f38b")
     const updateAnswerCorrect = (newState) => {
       SetAnswerCorrect(newState);
     };
@@ -96,7 +96,7 @@ export default function App()
          
           fetch('https://api.spotify.com/v1/me', authParams)
           .then(res => res.json())
-          .then(data => console.log(data))
+          .then(data => SetProfilePicture(data.images[1]), console.log(profilePicture))
         }
 
         function getRandomTrack(){
@@ -123,20 +123,21 @@ export default function App()
         }
 
         const getInfo = async () => {
+          console.log(profilePicture)
           if (loggedIn == false) {
-            SetShowText(true);
+            SetShowText(true)
           } else {
             SetGuessPage(true);
             const randomIndex = Math.floor(Math.random() * (49 - 0 + 1)) + 0
             getRandomTrack()
               .then(data => {
-              console.log(data.items[randomIndex])
-              const song = data.items[randomIndex]
-              SetCurrentSong({songName: song.track.name
-                , songPicture: song.track.album.images[0].url,
-              songUri: song.track.uri,
-              songPreviw: song.track.preview_url,
-            songArtists: song.track.artists}) })
+                console.log(data.items[randomIndex])
+                const song = data.items[randomIndex]
+                SetCurrentSong({songName: song.track.name, 
+                songPicture: song.track.album.images[0].url,
+                songUri: song.track.uri,
+                songPreviw: song.track.preview_url,
+                songArtists: song.track.artists}) })
         
               getUserProfileInfo();
               getUserPlaylists();
@@ -151,8 +152,11 @@ export default function App()
     return(
         <>
              <div className="navbar">
-              <h1 className="game-title">Guess The Song</h1> 
-              <button className="loginButton" onClick={handleLogin}> Login</button>
+              <h1 className="text-red-300">Guess The Song</h1> 
+              {!loggedIn && <button className="loginButton"
+               onClick={handleLogin}> Login</button>}
+               {loggedIn && <><h3>Logged in as: </h3>
+               <img src={profilePicture}></img></>}
             </div>
         <main>     
               <button className="infoButton" onClick={getInfo}> Start</button>
