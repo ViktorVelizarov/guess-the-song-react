@@ -12,10 +12,8 @@ export default function GuessPage(props){
             props.updateAnswerCorrect(true)
           }
         }
-    
-      
     return(
-        <>
+        <div>
         <div>
         <img className="h-80 w-80 mt-12"
          src="https://www.shareicon.net/data/512x512/2016/07/28/803169_box_512x512.png"></img>
@@ -26,9 +24,9 @@ export default function GuessPage(props){
                     type="text" 
                     value={songName}
                     onChange={(e) => SetSongName(e.target.value)}/>
-                <input className="box-border h-10 w-32" type="submit" />
+                <input className="box-border h-10 w-32 bg-blue-400" type="submit" />
             </form>
         </div>
-        </>
+        </div>
     )
 }

@@ -13,12 +13,11 @@ export default function App()
     const [currentSong, SetCurrentSong] = React.useState({});
     const [answerCorrect, SetAnswerCorrect] = React.useState(false); 
     const [currentAudio, SetCurrentAudio] = React.useState("")
-    const [profilePicture, SetProfilePicture] = React.useState("https://i.scdn.co/image/ab6775700000ee8512299563a607d5fcef06f38b")
+    const [profilePicture, SetProfilePicture] = React.useState("")
     const updateAnswerCorrect = (newState) => {
       SetAnswerCorrect(newState);
     };
-    console.log("is it correct:")
-    console.log(answerCorrect)
+
     const clientID = "3ba0d9e71d40432dad224aacbefec132"
     const clientSecret = "e5aed49d8f7549aa8168fc0ede9c0c9a"
     useEffect(() => {
@@ -79,6 +78,7 @@ export default function App()
             getReturnedParamsFromSpotifyAuth(window.location.hash);
           SetToken(access_token)
           SetLoggedIn(true)
+          getUserProfileInfo();
         }
       })
 
@@ -96,7 +96,7 @@ export default function App()
          
           fetch('https://api.spotify.com/v1/me', authParams)
           .then(res => res.json())
-          .then(data => SetProfilePicture(data.images[1]), console.log(profilePicture))
+          .then(data => SetProfilePicture(data.images[1]))
         }
 
         function getRandomTrack(){
@@ -137,9 +137,7 @@ export default function App()
                 songPicture: song.track.album.images[0].url,
                 songUri: song.track.uri,
                 songPreviw: song.track.preview_url,
-                songArtists: song.track.artists}) })
-        
-              getUserProfileInfo();
+                songArtists: song.track.artists[0].name}) })
               getUserPlaylists();
         
               SetShowSong(true);
@@ -151,20 +149,23 @@ export default function App()
       
     return(
         <>
-             <div className=" p-4 bg-blue-400 border-black flex
-              flex-row justify-between">
-              <h1 className="text-red-300">Guess The Song</h1> 
-              {!loggedIn && <button className="bg-green-300 py-4 px-16
+             <div className="p-4 border-black flex
+              flex-row justify-between
+              bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+              <h1 className="font-display text-5xl">Guess The Song</h1> 
+              {!loggedIn && <button className=" font-display  text-2xl bg-green-300 py-4 px-16
                rounded-xl border-red-800 cursor-pointer hover:text-white"
                onClick={handleLogin}> Login</button>}
-               {loggedIn && <><h3>Logged in as: </h3>
-               <img src={profilePicture}></img></>}
+
+              {loggedIn && <div className="flex flex-row"><h3 className="font-display 
+               text-xl mr-3 mt-2 text-center">Logged in as: </h3>
+               <img src={profilePicture.url} width="50px" height="100px"></img></div>}
             </div>
         <main className="flex flex-col items-center">     
-              <button className="bg-blue-400 py-4 px-16
+              <button className="font-display  text-2xl bg-blue-400 py-4 px-16
                rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
                 onClick={getInfo}> Start</button>
-              {showText && <h2> Please login first! </h2>}
+              {showText && <h2 className="text-white"> Please login first! </h2>}
               
               {showGuessPage && (
                 <>
@@ -178,7 +179,8 @@ export default function App()
                   
                   {answerCorrect &&
                     <Song name = {currentSong.songName} 
-                    img= {currentSong.songPicture}/>
+                    img= {currentSong.songPicture}
+                    artists={currentSong.songArtists}/>
                    }
                     </>
                 )}      
@@ -186,7 +188,3 @@ export default function App()
         </>
     )
 }
-
-
-
-    
