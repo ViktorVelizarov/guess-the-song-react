@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import Song from "./Components/Song"
-import GuessPage from "./Components/GuessPage";
-
+import GuessPage from "./Components/GuessPage"
+import Timer from "./Components/Timer"
 
 export default function App()
 {
@@ -14,8 +14,13 @@ export default function App()
     const [answerCorrect, SetAnswerCorrect] = React.useState(false); 
     const [currentAudio, SetCurrentAudio] = React.useState("")
     const [profilePicture, SetProfilePicture] = React.useState("")
+    const [timer, setTimer] = React.useState(30)
+
     const updateAnswerCorrect = (newState) => {
       SetAnswerCorrect(newState);
+    };
+    const updateTimer = (newState) => {
+      setTimer(newState);
     };
 
     const clientID = "3ba0d9e71d40432dad224aacbefec132"
@@ -162,11 +167,14 @@ export default function App()
                <img src={profilePicture.url} width="50px" height="100px"></img></div>}
             </div>
         <main className="flex flex-col items-center">     
-              <button className="font-display  text-2xl bg-blue-400 py-4 px-16
-               rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
-                onClick={getInfo}> Start</button>
-              {showText && <h2 className="text-white"> Please login first! </h2>}
               
+              {!showGuessPage && <button className="font-display  text-2xl bg-blue-400 py-4 px-16
+               rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
+                onClick={getInfo}> Start</button>}
+              {showText && <h2 className="text-white"> Please login first! </h2>}
+              {showGuessPage &&<h3 className="font-display  text-2xl
+               bg-blue-400 py-4 px-16 rounded-xl mt-6 "
+                > <Timer updateTimer={updateTimer}/></h3>}
               {showGuessPage && (
                 <>
                   {!answerCorrect &&

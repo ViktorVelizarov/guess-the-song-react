@@ -1,5 +1,5 @@
 import React from "react"
-
+import Timer from "./Timer";
 export default function GuessPage(props){
     const [songName, SetSongName] = React.useState("");
 
@@ -14,7 +14,7 @@ export default function GuessPage(props){
         }
     return(
         <div>
-        <div>
+        <div className="flex flex-col items-center">
         <img className="h-80 w-80 mt-12"
          src="https://www.shareicon.net/data/512x512/2016/07/28/803169_box_512x512.png"></img>
         </div>
