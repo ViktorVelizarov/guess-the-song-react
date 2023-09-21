@@ -53,7 +53,7 @@ export default function App()
     }, [])
 
     const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-    const REDIRECT_URL_AFTER_LOGIN = "http://localhost:5173/";
+    const REDIRECT_URL_AFTER_LOGIN = "https://sweet-sunburst-e39bd9.netlify.app";
     const SPACE_DELIMITER = "%20";
     const SCOPES = [
     "user-read-email",
