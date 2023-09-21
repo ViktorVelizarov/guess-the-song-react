@@ -2,7 +2,7 @@ import React from "react"
 import Timer from "./Timer";
 export default function GuessPage(props){
     const [songName, SetSongName] = React.useState("");
-
+    const [wrongAnswer, SetWrongAnswer] = React.useState(false);
         const handleSubmit = (event) => {
           event.preventDefault();
           console.log(props.name)
@@ -10,6 +10,9 @@ export default function GuessPage(props){
           if (songName == props.name){
             console.log("correct")
             props.updateAnswerCorrect(true)
+          }
+          else{
+            SetWrongAnswer(true)
           }
         }
     return(
@@ -26,6 +29,7 @@ export default function GuessPage(props){
                     onChange={(e) => SetSongName(e.target.value)}/>
                 <input className="box-border h-10 w-32 bg-blue-400" type="submit" />
             </form>
+            {wrongAnswer && <h1 className=" font-display text-lg text-white mt-5 text-center"> Wrong, try again :/</h1>}
         </div>
         </div>
     )
