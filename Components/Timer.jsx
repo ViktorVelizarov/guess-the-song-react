@@ -1,7 +1,7 @@
 import React from "react"
 
 export default function CountdownTimer(props) {
-    const [count, setCount] = React.useState(30)
+    const [count, setCount] = React.useState(15)
   
     React.useEffect(() => {
       const countdownInterval = setInterval(() => {

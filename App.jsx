@@ -14,15 +14,21 @@ export default function App()
     const [answerCorrect, SetAnswerCorrect] = React.useState(false); 
     const [currentAudio, SetCurrentAudio] = React.useState("")
     const [profilePicture, SetProfilePicture] = React.useState("")
-    const [timer, setTimer] = React.useState(30)
-
+    const [timer, setTimer] = React.useState(15)
+    const [timeRanOut, setTimeRanOut] = React.useState(false)
+    console.log(timer)
     const updateAnswerCorrect = (newState) => {
       SetAnswerCorrect(newState);
     };
     const updateTimer = (newState) => {
       setTimer(newState);
     };
-
+    useEffect(() => {
+      if (timer === 1 && !timeRanOut) {
+        currentAudio.pause();
+        setTimeRanOut(true);
+      }
+    }, [timer, timeRanOut]);
     const clientID = "3ba0d9e71d40432dad224aacbefec132"
     const clientSecret = "e5aed49d8f7549aa8168fc0ede9c0c9a"
     useEffect(() => {
@@ -149,6 +155,8 @@ export default function App()
               console.log(currentSong);
         
               SetAnswerCorrect(false);
+
+              setTimer(15)
             } 
         };
       
@@ -172,9 +180,15 @@ export default function App()
                rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
                 onClick={getInfo}> Start</button>}
               {showText && <h2 className="text-white"> Please login first! </h2>}
-              {showGuessPage &&<h3 className="font-display  text-2xl
-               bg-blue-400 py-4 px-16 rounded-xl mt-6 "
-                > <Timer updateTimer={updateTimer}/></h3>}
+         
+
+              {showGuessPage && timer !== 1 ? <h3 className="font-display  text-2xl
+               bg-blue-400 py-4 px-16 rounded-xl mt-6 "><Timer updateTimer={updateTimer} /></h3>: null}
+                
+                {timer == 1 &&
+                   <button className="font-display  text-2xl bg-blue-400 py-4 px-16
+                   rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
+                    onClick={getInfo}> Try Again</button>}
               {showGuessPage && (
                 <>
                   {!answerCorrect &&
