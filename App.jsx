@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import Song from "./Components/Song"
 import GuessPage from "./Components/GuessPage"
 import Timer from "./Components/Timer"
+import Navbar from "./Components/Navbar"
 
 export default function App()
 {
@@ -53,7 +54,7 @@ export default function App()
     }, [])
 
     const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-    const REDIRECT_URL_AFTER_LOGIN = "https://sweet-sunburst-e39bd9.netlify.app";
+    const REDIRECT_URL_AFTER_LOGIN = "http://localhost:5173/";
     const SPACE_DELIMITER = "%20";
     const SCOPES = [
     "user-read-email",
@@ -171,18 +172,9 @@ export default function App()
       
     return(
         <>
-             <div className="p-4 border-black flex
-              flex-row justify-between
-              bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-              <h1 className="font-display text-5xl">Guess The Song</h1> 
-              {!loggedIn && <button className=" font-display  text-2xl bg-green-300 py-4 px-16
-               rounded-xl border-red-800 cursor-pointer hover:text-white"
-               onClick={handleLogin}> Login</button>}
-
-              {loggedIn && <div className="flex flex-row"><h3 className="font-display 
-               text-xl mr-3 mt-2 text-center">Logged in as: </h3>
-               <img src={profilePicture.url} width="50px" height="100px"></img></div>}
-            </div>
+        <Navbar loggedIn={loggedIn}
+         handleLogin={handleLogin}
+         url = {profilePicture.url}/>     
         <main className="flex flex-col items-center">     
               
               {!showGuessPage && <> <div className="flex gap-24 mt-8"><img className="opacity-30 w-10 h-10" src="Images/ReactLogo.png"></img>
