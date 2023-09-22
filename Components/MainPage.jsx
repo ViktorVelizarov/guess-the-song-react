@@ -1,9 +1,9 @@
 import React from "react"
 
-export default function MainPage(props){
+export default function MainPage({showGuessPage, getInfo , showText}){
     return(
         <>
-        {!props.showGuessPage && <> <div className="flex gap-24 mt-8"><img className="opacity-30 w-10 h-10" src="Images/ReactLogo.png"></img>
+        {!showGuessPage && <> <div className="flex gap-24 mt-8"><img className="opacity-30 w-10 h-10" src="Images/ReactLogo.png"></img>
               <img className="opacity-30 w-10 h-10" src="Images/SpotifyLogo.png"></img></div>
                 <h1 className="text-white mt-6"> This project was made with React and SpotifyAPI. 
                 </h1>
@@ -18,8 +18,8 @@ export default function MainPage(props){
                   
                   <button className="font-display  text-2xl bg-blue-400 py-4 px-16
                rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
-                onClick={props.getInfo}> Start</button></>}
-              {props.showText && <h2 className="text-white"> Please login first! </h2>}
+                onClick={getInfo}> Start</button></>}
+              {showText && <h2 className="text-white"> Please login first! </h2>}
         </>
     )
 }

@@ -54,7 +54,7 @@ export default function App()
     }, [])
 
     const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-    const REDIRECT_URL_AFTER_LOGIN = "http://localhost:5173/";
+    const REDIRECT_URL_AFTER_LOGIN = "https://sweet-sunburst-e39bd9.netlify.app";
     const SPACE_DELIMITER = "%20";
     const SCOPES = [
     "user-read-email",
@@ -158,15 +158,12 @@ export default function App()
                 songUri: song.track.uri,
                 songPreviw: song.track.preview_url,
                 songArtists: song.track.artists[0].name}) })
-              getUserPlaylists();
-        
-              SetShowSong(true);
-              console.log(currentSong);
-        
-              SetAnswerCorrect(false);
-
-              setTimer(15)
-              setTimeRanOut(false)
+            getUserPlaylists();
+            SetShowSong(true);
+            console.log(currentSong);
+            SetAnswerCorrect(false);
+            setTimer(15)
+            setTimeRanOut(false)
             } 
         };
       
@@ -184,10 +181,11 @@ export default function App()
               {showGuessPage && !timeRanOut ? <h3 className="font-display  text-2xl
                bg-blue-400 py-4 px-16 rounded-xl mt-6 "><Timer updateTimer={updateTimer} /></h3>: null}
                 
-                {timeRanOut &&
-                   <button className="font-display  text-2xl bg-blue-400 py-4 px-16
-                   rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
-                    onClick={getInfo}> Try Again</button>}
+              {timeRanOut &&
+                  <button className="font-display  text-2xl bg-blue-400 py-4 px-16
+                  rounded-xl mt-6 border-red-800 cursor-pointer hover:text-white"
+                  onClick={getInfo}> Try Again</button>}
+
               {showGuessPage && (
                 <>
                   {!answerCorrect &&
@@ -196,7 +194,7 @@ export default function App()
                       answerCorrect={answerCorrect}
                       updateAnswerCorrect={updateAnswerCorrect}
                     />
-                   }
+                  }
                   
                   {answerCorrect &&
                     <Song name = {currentSong.songName} 
@@ -205,7 +203,8 @@ export default function App()
                    }
             </>
                 )}   
-                <div className="absolute bottom-0 right-0 m-3"><img className="h-10 w-10" src="Images/CreatorLogo.png"></img></div>   
+                <div className="absolute bottom-0 right-0 m-3"><img className="h-10 w-10"
+                 src="Images/CreatorLogo.png"></img></div>   
         </main>
         </>
     )
