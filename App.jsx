@@ -4,6 +4,8 @@ import GuessPage from "./Components/GuessPage"
 import Timer from "./Components/Timer"
 import Navbar from "./Components/Navbar"
 import MainPage from "./Components/MainPage"
+import Assets from "./Assets"
+
 export default function App()
 {
     const [token, SetToken] = React.useState("")
@@ -204,7 +206,7 @@ export default function App()
             </>
                 )}   
                 <div className="absolute bottom-0 right-0 m-3"><img className="h-10 w-10"
-                 src="Images/CreatorLogo.png"></img></div>   
+                 src={Assets.CreatorLogo}></img></div>   
         </main>
         </>
     )

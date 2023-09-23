@@ -1,10 +1,10 @@
 import React from "react"
-
+import Assets from "../Assets"
 export default function MainPage({showGuessPage, getInfo , showText}){
     return(
         <>
-        {!showGuessPage && <> <div className="flex gap-24 mt-8"><img className="opacity-30 w-10 h-10" src="Images/ReactLogo.png"></img>
-              <img className="opacity-30 w-10 h-10" src="Images/SpotifyLogo.png"></img></div>
+        {!showGuessPage && <> <div className="flex gap-24 mt-8"><img className="opacity-30 w-10 h-10" src={Assets.ReactLogo}></img>
+              <img className="opacity-30 w-10 h-10" src={Assets.SpotifyLogo}></img></div>
                 <h1 className="text-white mt-6"> This project was made with React and SpotifyAPI. 
                 </h1>
                 <div className="mt-10 p-8 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
