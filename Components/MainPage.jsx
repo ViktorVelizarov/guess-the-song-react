@@ -7,10 +7,11 @@ export default function MainPage({showGuessPage, getInfo , showText}){
               <img className="opacity-30 w-10 h-10" src={Assets.SpotifyLogo}></img></div>
                 <h1 className="text-white mt-6"> This project was made with React and SpotifyAPI. 
                 </h1>
+            
                 <div className="mt-10 p-8 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
                 "> <h1 className="text-center mb-5 text-white text-4xl font-display">How to play:</h1>
                 <ul className="text-white text-lg">
-                  <li>1. Click the Login button and login with your spotify account</li>
+                  <li>1. Click the Login button and login </li>
                   <li>2. Click the Start button</li>
                   <li>3. You have 15 seconds to guess the random song</li>
                   <li>4. Type the name of the song in the input field below</li>

@@ -40,8 +40,8 @@ export default function App()
         SetAnswerCorrect(true)
       }
     }, [timer, timeRanOut]);
-    const clientID = "3ba0d9e71d40432dad224aacbefec132"
-    const clientSecret = "e5aed49d8f7549aa8168fc0ede9c0c9a"
+    const clientID = "12e4a8f06e7b45fab45cd824e616b0c8"
+    const clientSecret = "96d66f0779574edfab39d58654fa290b"
     useEffect(() => {
     //API Access Token
     var authParams = {
@@ -105,6 +105,7 @@ export default function App()
       })
 
         function handleLogin(){
+            window.alert("IMPORTANT: Right now the app only works with this Spotify account - name: testingspotifyapp@gmail.com, password: test123456. That's because it's using the developer mode in spotifyWebAPI which allows for up to 25 predefined users to use the app. For this reason you have to use the predifined test account to make the app work.");
             window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
             SetShowText(false)
           }
